@@ -56,17 +56,17 @@ int main() {
 
         char choice[10];
         printf("Enter your choice: ");
-        (void)scanf("%s", choice);
+        scanf("%s", choice);
 
         if (strcmp(choice, "1") == 0) {
             char directoryName[MAX_NAME_LENGTH];
-            printf("\033[0;32mEnter directory name: \033[0m");
+            printf("\nEnter directory name:");
             scanf("%s", directoryName);
             createSubdirectory(directoryName, currentDirectory);
         }
         else if (strcmp(choice, "2") == 0) {
             char directoryName[MAX_NAME_LENGTH];
-            printf("\033[0;32mEnter directory name: \033[0m");
+            printf("\nEnter directory name:");
             scanf("%s", directoryName);
             currentDirectory = changeDirectory(directoryName, currentDirectory);
             push(&headLevelStack, currentDirectory);
@@ -74,7 +74,7 @@ int main() {
         else if (strcmp(choice, "3") == 0) {
             if (currentDirectory != rootDirectory) {
                 currentDirectory = pop(&headLevelStack);
-                printf("\033[0;32mCurrently in '%s' \033[0m\n", currentDirectory->name);
+                printf("\nCurrently in '%s'", currentDirectory->name);
             }
             else {
                 printf("Already in the root directory.\n");
@@ -89,17 +89,17 @@ int main() {
             break;
         }
         else {
-            printf("\033[0;31mInvalid choice. Please enter a valid option.\033[0m\n");
+            printf("\nInvalid choice. Please enter a valid option.\n");
         }
     }
 
-    // Free allocated memory
+
     free(rootDirectory);
 
     return 0;
 }
 
-/*Directory functions*/
+
 
 PositionDirectory createDirectory(char name[MAX_NAME_LENGTH]) {
     PositionDirectory newDirectory = NULL;
@@ -139,19 +139,19 @@ PositionDirectory changeDirectory(char name[MAX_NAME_LENGTH], PositionDirectory 
 }
 
 int listDirectoryContents(PositionDirectory currentDirectory) {
-    printf("\033[0;32mContents of directory '%s':\033[0m\n", currentDirectory->name);
+    printf("Contents of directory '%s':\n", currentDirectory->name);
     PositionDirectory subdirectory = currentDirectory->subDirectories;
     while (subdirectory != NULL) {
-        printf("\033[0;32m - %s\033[0m\n", subdirectory->name);
+        printf("- %s\n", subdirectory->name);
         subdirectory = subdirectory->next;
     }
     if (currentDirectory->subDirectories == NULL) {
-        printf("\033[0;32m   (empty)\033[0m\n");
+        printf("(empty)\n");
     }
     return EXIT_SUCCESS;
 }
 
-/*Stack functions*/
+
 
 PositionDirectory pop(PositionLevelStack headLevelStack) {
     PositionLevelStack toDelete = NULL;
